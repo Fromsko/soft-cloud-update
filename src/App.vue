@@ -9,6 +9,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./assets/style/reset.css"
-@import "./assets/style/index.scss"
+@import "@/assets/style/reset.css"
+@import "@/assets/style/oneui.css"
+@import "@/assets/style/index.scss"
 </style>

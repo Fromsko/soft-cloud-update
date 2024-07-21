@@ -3,8 +3,8 @@
  */
 import axios from "axios"
 import { ElMessage } from "element-plus"
-import config from "../config"
-import router from "../router"
+import config from "@/config"
+import router from "@/router"
 
 const TOKEN_ERROR = "Token 已过期"
 const NETWORK_ERROR = "网络异常"

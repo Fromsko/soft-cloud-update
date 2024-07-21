@@ -2,7 +2,7 @@
  * storage 封装
  * @author fromsko
  */
-import config from "../config"
+import config from "@/config"
 
 export default {
     setItem (key, val) {

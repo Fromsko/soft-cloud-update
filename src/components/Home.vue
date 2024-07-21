@@ -51,6 +51,12 @@ export default {
       .main-page {
         height: 100%;
         background: #fff;
+
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
       }
     }
   }
