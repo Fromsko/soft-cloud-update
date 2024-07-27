@@ -16,7 +16,14 @@ $ vercel
 
 ## 前期展示
 
-![frist-commited](./markdown/frist-commited.png)
+- 主页面
+  ![frist-commited](./markdown/index-page.png)
+
+- 登录页面
+  ![frist-commited](./markdown/login-page.png)
+
+- 关于页面
+  ![frist-commited](./markdown/about-page.png)
 
 ## 启动
 
