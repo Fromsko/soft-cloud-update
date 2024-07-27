@@ -1,0 +1,19 @@
+{
+  "name": "soft-backend",
+  "version": "0.0.1",
+  "main": "server.js",
+  "scripts": {
+    "test": "bun server.js",
+    "dev": "bun server.js"
+  },
+  "author": "ruang",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@types/express": "^4.17.21"
+  }
+}

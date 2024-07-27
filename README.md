@@ -91,3 +91,25 @@ export default {
 }
 </script>
 ```
+
+#### bun 运行多个项目
+
+> 安装依赖
+
+```shell
+bun i concurrently --save
+```
+
+> 配置启动命令
+
+```json
+{
+  "scripts": {
+    "build": "vite build",
+    "preview": "vite preview",
+    "frontend": "vite",
+    "backend": "bun run backend/server.js",
+    "all": "concurrently \"bun run frontend\" \"bun run backend\""
+  }
+}
+```
