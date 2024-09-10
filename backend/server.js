@@ -10,7 +10,7 @@ app.use(express.json())
 
 // router
 app.get('/', (_, resp) => {
-    resp.send('Server alreadly running')
+    resp.send('Server already running')
 })
 app.use('/crypto', router_list[0])
 app.use('/math', router_list[1])
@@ -19,16 +19,14 @@ app.use('/utils', router_list[3])
 
 // run!!!
 app.listen(SERVER.PORT, () => {
-    console.log(`Server alreadly running :> [${SERVER.MODE}]`)
+    console.log(`Server already running :> [${SERVER.MODE}]`)
     console.log(`You can goto :> http://${SERVER.HOST}:${SERVER.PORT}`)
 })
 
-/* 
-
+/*
 // 获取当前函数名
 var tmp = arguments.callee.toString()
 var re = /function\s*(\w*)/i
 var matches = re.exec(tmp)
 alert(matches[1]);
-
 */

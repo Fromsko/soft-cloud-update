@@ -1,10 +1,7 @@
-/**
- * Axios 请求封装
- */
-import axios from "axios"
-import { ElMessage } from "element-plus"
 import config from "@/config"
 import router from "@/router"
+import axios from "axios"
+import { ElMessage } from "element-plus"
 
 const TOKEN_ERROR = "Token 已过期"
 const NETWORK_ERROR = "网络异常"

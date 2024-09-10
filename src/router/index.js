@@ -1,11 +1,16 @@
 // index.js - router
-import About from "@/components/About.vue"
-import Base from "@/components/Base.vue"
-import Home from "@/components/Home.vue"
-import Login from "@/components/Login.vue"
-import Welcome from "@/components/Welcome.vue"
+import About from "@/views/About.vue"
+import ApiPage from '@/views/ApiPage.vue'
+import Base from "@/views/Base.vue"
+import Home from "@/views/Home.vue"
+import Login from "@/views/Login.vue"
+import Welcome from "@/views/Welcome.vue"
+import useColorLogOutPut from "@/utils/color_log"
 import storage from "@/utils/storage"
 import { createRouter, createWebHashHistory } from "vue-router"
+
+
+const log = useColorLogOutPut()
 
 const routes = [
     {
@@ -15,6 +20,17 @@ const routes = [
             title: "首页"
         },
         component: Base,
+    },
+    {
+        path: '/api/docs',
+        name: 'Api',
+        component: ApiPage,
+        props: ((route) => {
+            return route.params
+        }),
+        meta: {
+            title: "内容"
+        },
     },
     {
         name: 'Login',
@@ -68,16 +84,15 @@ router.beforeEach((to, from, next) => {
     if (to.path == '/Login') return next()
     if (to.path == '/register') return next()
     const tokenStr = storage.getItem('token')
-    console.log(tokenStr)
     if (!tokenStr) return next('/Login')
     next()
 })
 
 // 全局解析守
-// router.beforeResolve((to, from, next) => {
-//     // console.log('全局解析守卫', to, from, next)
-//     next()
-// })
+router.beforeResolve((to, from, next) => {
+    log.info('我是全局解析守卫')
+    next()
+})
 
 // // 全局后置守卫
 // router.afterEach((to, from, failure) => {

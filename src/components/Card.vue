@@ -1,16 +1,13 @@
 <template>
-  <el-card
-    class="card"
-    :class="{ 'float-up': hover }"
-    @mouseover="hover = true"
-    @mouseleave="hover = false"
-  >
-    <div>
-      <h3>{{ title }}</h3>
-      <p>{{ description }}</p>
-      <span>{{ calls }} 次调用</span>
+  <div class="col-sm-4">
+    <div class="block block-link-hover2 ribbon ribbon-modern ribbon-success">
+      <div class="ribbon-box font-w600">{{ calls }}</div>
+      <div class="block-content">
+        <div class="h4 push-5">{{ title }}</div>
+        <p class="text-muted">{{ description }}</p>
+      </div>
     </div>
-  </el-card>
+  </div>
 </template>
 
 <script>
@@ -20,20 +17,7 @@ export default {
     description: String,
     calls: Number,
   },
-  data() {
-    return {
-      hover: false,
-    }
-  },
 }
 </script>
 
-<style>
-.card {
-  transition: transform 0.3s;
-}
-
-.float-up {
-  transform: translateY(-10px);
-}
-</style>
+<style></style>

@@ -89,7 +89,6 @@ const useColorLogOutPut = () => {
         img.src = url
     }
 
-    // retu;
     return {
         info,
         error,
