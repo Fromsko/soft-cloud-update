@@ -1,29 +1,23 @@
 # Deploy Your Own
 
-Deploy your own Vite project with Vercel.
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/vercel/tree/main/examples/vite&template=vite)
-
-_Live Example: https://vite-vue-template.vercel.app_
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/fromsko/soft-cloud-update)
 
 ## Deploying From Your Terminal
 
-You can deploy your new Vite project with a single command from your terminal using [Vercel CLI](https://vercel.com/download):
-
 ```shell
-$ vercel
+vercel
 ```
 
 ## 前期展示
 
 - 主页面
-  ![frist-commited](./markdown/index-page.png)
+  ![frist-commited](./docs/index-page.png)
 
 - 登录页面
-  ![frist-commited](./markdown/login-page.png)
+  ![frist-commited](./docs/login-page.png)
 
 - 关于页面
-  ![frist-commited](./markdown/about-page.png)
+  ![frist-commited](./docs/about-page.png)
 
 ## 启动
 
