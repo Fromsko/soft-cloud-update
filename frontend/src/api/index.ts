@@ -11,5 +11,11 @@ export default {
             method: 'post',
             data: params
         })
+    },
+    logout(params: any) {
+        return request({
+            url: '/user/logout',
+            method: 'get',
+        })
     }
 }

@@ -1,6 +1,5 @@
-import { fileURLToPath, URL } from 'node:url'
-
 import vue from '@vitejs/plugin-vue'
+import path from 'path'
 import ElementPlus from 'unplugin-element-plus/vite'
 import { defineConfig } from 'vite'
 
@@ -12,8 +11,9 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
+      '@': path.resolve(__dirname, './src'),
+      '*': ''
+    },
   },
   server: {
     hmr: true, // 关闭 HMR
