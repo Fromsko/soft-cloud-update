@@ -2,13 +2,7 @@
   <div class="card">Hello World!</div>
 </template>
 
-<script lang="ts" setup>
-import { defineComponent } from 'vue'
-
-export const DemoCard = defineComponent({
-  name: 'DemoCard',
-})
-</script>
+<script lang="ts" setup></script>
 
 <style scoped>
 div.card {
