@@ -2,18 +2,18 @@
  * api 管理
  */
 
-import request from "@/utils/request"
+import request from "@/utils/http/request"
 
 export default {
-    login(params: any) {
-        return request({
+    async login(params: any) {
+        return await request({
             url: '/user/login',
             method: 'post',
             data: params
         })
     },
-    logout(params: any) {
-        return request({
+    async logout(params: any) {
+        return await request({
             url: '/user/logout',
             method: 'get',
         })

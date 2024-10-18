@@ -3,11 +3,12 @@
     <div :class="['nav-side', isCollapse ? 'fold' : 'unfold']">
       <!-- 系统 LOGO -->
       <div class="logo">
-        <img src="./../assets/logo.svg" alt="" />
-        <span>Manager</span>
+        <img src="@/assets/logo.svg" alt="" />
+        <span class="nav-side-title">Manager</span>
       </div>
       <!-- 导航菜单 -->
       <el-menu
+        :collapse-transition="false"
         :default-active="activeLocal"
         class="nav-menu"
         background-color="#001529"
@@ -42,9 +43,7 @@
             </span>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item command="email"
-                  >邮箱: {{ userInfo.userEmail }}</el-dropdown-item
-                >
+                <el-dropdown-item command="email">邮箱: {{ userInfo.userEmail }}</el-dropdown-item>
                 <el-dropdown-item command="logout">退出</el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -63,14 +62,15 @@
 <script setup>
 import BreadCrumb from '@/components/BreadCrumb.vue'
 import MenuTree from '@/components/MenuTree.vue'
-import storage from '@/utils/storage'
-import { computed, ref, watch } from 'vue'
+import { useStorage } from '@/utils/storage'
+import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
+const storage = useStorage()
 const route = useRoute()
 const router = useRouter()
 const isCollapse = ref(false)
-const activeLocal = ref('')
+const activeLocal = ref(route.path)
 const userInfo = {
   userName: 'Fromsko',
   userEmail: '1614355756@qq.com',
@@ -86,24 +86,16 @@ const toggle = () => {
   isCollapse.value = !isCollapse.value
 }
 
-computed(() => {
-  activeLocal.value = location.hash.slice(1)
-  console.log(activeLocal.value)
-})
-
+// 监听路由变化，更新激活菜单项
 watch(
-  () => route.matched,
-  (newData) => {
-    let routeInfo = newData[newData.length - 1]
-    activeLocal.value = routeInfo.path.toLocaleLowerCase()
-    // NOTE: 菜单数据变化
-    // console.log('新的路径变化：', newData[newData.length - 1])
-  },
-  { immediate: true }
+  () => route.path,
+  (newPath) => {
+    activeLocal.value = newPath
+  }
 )
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .basic-layout {
   position: relative;
 
@@ -114,47 +106,55 @@ watch(
     background-color: #001529;
     color: #fff;
     overflow-y: auto;
-    transition: width 0.5s ease; // 设置平滑的宽度过渡
+    transition: width 0.3s ease-in-out; // 统一过渡时间
+
     .logo {
       display: flex;
       align-items: center;
       font-size: 18px;
       height: 50px;
+      overflow: hidden;
       img {
         margin: 0 16px;
         width: 32px;
         height: 32px;
       }
+      .nav-side-title {
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out; // 添加透明度过渡
+      }
     }
+
     .nav-menu {
       height: calc(100vh - 60px);
       border-right: none;
-      transition: height 0.3s ease; // 设置平滑的高度过渡
       overflow: hidden;
+      transition: opacity 0.3s ease-in-out; // 过渡时处理透明度
     }
+
     &.fold {
       width: 64px;
-      .nav-menu {
-        // 设置折叠状态时的高度
-        height: calc(100vh - 60px);
+      transition: width 0.3s ease-in-out;
+
+      .logo .nav-side-title {
+        opacity: 0;
       }
     }
+
     &.unfold {
       width: 200px;
-      .nav-menu {
-        height: calc(100vh - 60px);
-      }
+      transition: width 0.3s ease-in-out;
     }
   }
 
   .content-right {
     margin-left: 200px;
+    transition: margin-left 0.3s ease-in-out;
+
     &.fold {
       margin-left: 64px;
     }
-    &.unfold {
-      margin-right: 200px;
-    }
+
     .nav-top {
       height: 50px;
       line-height: 50px;
@@ -191,12 +191,9 @@ watch(
       .main-page {
         height: 100%;
         background: #fff;
-
-        -webkit-user-drag: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
   }

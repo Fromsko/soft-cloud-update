@@ -6,9 +6,10 @@
 </template>
 
 <script setup lang="ts">
+import { useApiStore } from '@/utils/store/apiStore' // 引入 store
 import { marked } from 'marked'
 import { computed, onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 // 类型定义
 interface ApiInfo {
@@ -20,14 +21,18 @@ interface ApiInfo {
 
 // 获取路由
 const route = useRoute()
+const router = useRouter()
 
-// 使用类型断言并设置默认值
-const apiInfo: ApiInfo = (route as any).state?.apiInfo || {
-  id: 0,
-  title: '未提供标题',
-  description: '未提供描述',
-  calls: 0,
-}
+const store = useApiStore() // 获取 store 实例
+const apiInfo: ApiInfo = store.apiInfo // 获取存储的 apiInfo 数据
+
+// // 使用类型断言并设置默认值
+// const apiInfo: ApiInfo = (route as any).state?.apiInfo || {
+//   id: 0,
+//   title: '未提供标题',
+//   description: '未提供描述',
+//   calls: 0,
+// }
 
 // 创建接口文档的完整内容
 const markdownContent = computed(() => {

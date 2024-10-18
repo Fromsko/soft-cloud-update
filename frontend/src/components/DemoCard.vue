@@ -1,0 +1,25 @@
+<template>
+  <div class="card">Hello World!</div>
+</template>
+
+<script lang="ts" setup>
+import { defineComponent } from 'vue'
+
+export const DemoCard = defineComponent({
+  name: 'DemoCard',
+})
+</script>
+
+<style scoped>
+div.card {
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(18.5px);
+  -webkit-backdrop-filter: blur(18.5px);
+  border: 0px solid rgba(255, 255, 255, 0.18);
+  box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
+  -webkit-box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
+  border-radius: 25px;
+  -webkit-border-radius: 25px;
+  color: rgb(255, 255, 255);
+}
+</style>

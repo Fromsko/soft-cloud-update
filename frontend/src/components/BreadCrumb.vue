@@ -1,42 +1,41 @@
 <template>
-  <el-breadcrumb :separator-icon="ArrowRight">
-    <el-breadcrumb-item v-for="(item, index) of breadList" :key="index">
-      <router-link to="/welcome" v-if="index === 0">{{
-        item.meta.title
-      }}</router-link>
-      <span v-else>{{ item.meta.title }}</span>
+  <el-breadcrumb :separator-icon="ArrowRight" style="user-select: none">
+    <el-breadcrumb-item v-for="(item, index) in breadList" :key="index" :to="{ path: item.path }">
+      {{ item.meta.title }}
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router'
+import { log } from '@/utils/log/web_log'
 import { ArrowRight } from '@element-plus/icons-vue'
 import { ref, watch } from 'vue'
-import useColorLogOutPut from '@/utils/color_log'
+import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const breadList = ref([])
-const log = useColorLogOutPut()
 
-const isHome = (route) => {
-  return route.name === 'home'
-}
+// 判断是否为首页
+const isHome = (route) => route.name === 'DashBoardHomeView'
 
+// 监听路由的变化，更新面包屑
 watch(
   () => route.matched,
-  (newData) => {
-    breadList.value = newData
-    if (!isHome(newData[0])) {
-      newData = [{ path: '/home', meta: { title: '首页' } }].concat(newData)
+  (newMatchedRoutes) => {
+    log.info('当前路由信息:', newMatchedRoutes)
+
+    let updatedBreadList = [...newMatchedRoutes]
+
+    // 过滤掉 'DashBoardView'，不渲染这个路由
+    updatedBreadList = updatedBreadList.filter((item) => item.name !== 'DashBoardView')
+
+    // 如果当前路由不是首页，添加首页到面包屑的最前面
+    if (!isHome(updatedBreadList[0])) {
+      updatedBreadList = [{ path: '/dashboard/home', meta: { title: '控制台' } }, ...updatedBreadList]
     }
-    // NOTE: 面包屑
-    breadList.value.forEach((item, index) => {
-      log.info('面包屑', `${index} ${item.path} ${item.meta.title}`)
-    })
+
+    breadList.value = updatedBreadList
   },
   { immediate: true }
 )
 </script>
-
-<style></style>

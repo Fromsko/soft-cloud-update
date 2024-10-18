@@ -4,28 +4,19 @@
       <header class="site-header">
         <nav class="nav_jsxs">
           <img class="logo_jsxs" style="float: left" />
-          <router-link to="/Welcome">欢迎</router-link>
-          <router-link to="/Login">登录</router-link>
-          <router-link to="/About">关于</router-link>
+          <router-link to="/login">登录</router-link>
+          <router-link to="/dashboard/home">控制台</router-link>
         </nav>
         <div class="box-text">
           <h1>Fromkso 软件库</h1>
           <p>
             第三方验证对接、云更新、软件库<br />
-            <span class="package-amount"
-              >共收录了 <strong> 0 </strong>个软件
-            </span>
+            <span class="package-amount">共收录了 <strong> 0 </strong>个软件 </span>
           </p>
           <!-- 搜索框 -->
           <div class="search-warper">
             <div class="form-group">
-              <el-input
-                placeholder="搜索需要的工具"
-                spellcheck="false"
-                v-model="searchQuery"
-                style="width: 240px"
-                clearable
-              ></el-input>
+              <el-input placeholder="搜索需要的工具" spellcheck="false" v-model="searchQuery" style="width: 240px" clearable></el-input>
             </div>
           </div>
         </div>
@@ -53,9 +44,9 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Card from '@/components/Card.vue'
-import { computed, reactive, ref, toRaw } from 'vue'
+import { reactive, ref, toRaw } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -87,21 +78,20 @@ const apis = reactive([
   // 添加更多的 API 数据...
 ])
 
-const handleCardClick = (apiInfo) => {
+import { useApiStore } from '@/utils/store/apiStore' // 引入 store
+
+const handleCardClick = (apiInfo: any) => {
   isClicked.value = !isClicked
-  let data = toRaw(apiInfo)
-  router.push({
-    name: 'api',
-    // state: { apiInfo: data },
-    params: { apiInfo: toRaw(apiInfo) }, // 使用 params 传递数据
-  })
+  const store = useApiStore() // 获取 store 实例
+  store.setApiInfo(toRaw(apiInfo)) // 保存数据到 Pinia 状态
+  router.push({ name: 'ApiView' }) // 跳转路由
 }
 
-const filteredApis = computed(() =>
-  this.apis.filter((api) => {
-    console.log(api.title.includes(this.searchQuery))
-  })
-)
+// const filteredApis = computed(() =>
+//   this.apis.filter((api) => {
+//     console.log(api.title.includes(this.searchQuery))
+//   })
+// )
 </script>
 
 <style scoped>

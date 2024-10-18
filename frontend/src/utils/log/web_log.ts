@@ -1,19 +1,29 @@
 /** 
-  File: color_log.ts
-  Author: Fromsko
-  Created At: 2024-09-14
-  GitHub: https://github.com/fromsko
-  Description: 好看的浏览器控制台输出
+  File: web_log.ts
+  Description: 浏览器日志
 */
 
-const useColorLogOutPut = () => {
-    const isProduction = import.meta.env.MODE === 'production'
+class WebLog {
+    private static instance: WebLog
+    private isProduction: boolean
 
-    const isEmpty = (value: any) => {
+    constructor(mode: string) {
+        this.isProduction = mode === 'production'
+    }
+
+    public create(mode: string) {
+        if (!WebLog.instance) {
+            WebLog.instance = new WebLog(mode)
+        }
+        return WebLog.instance
+    }
+
+    private isEmpty = (value: any) => {
         return value == null || value === undefined || value === ''
     }
-    const prettyPrint = (title: any, text: any, color: any) => {
-        if (isProduction) return
+
+    private prettyPrint = (title: any, text: any, color: any) => {
+        if (this.isProduction) return
         console.log(
             `%c ${title} %c ${text} %c`,
             `background:${color};border:1px solid ${color}; padding: 1px; border-radius: 2px 0 0 2px; color: #fff;`,
@@ -21,27 +31,32 @@ const useColorLogOutPut = () => {
             'background:transparent'
         )
     }
-    const info = (textOrTitle: any, content = '') => {
-        const title = isEmpty(content) ? 'Info' : textOrTitle
-        const text = isEmpty(content) ? textOrTitle : content
-        prettyPrint(title, text, '#909399')
+
+    public info = (textOrTitle: any, content = '') => {
+        const title = this.isEmpty(content) ? 'Info' : textOrTitle
+        const text = this.isEmpty(content) ? textOrTitle : content
+        this.prettyPrint(title, text, '#909399')
     }
-    const error = (textOrTitle: any, content = '') => {
-        const title = isEmpty(content) ? 'Error' : textOrTitle
-        const text = isEmpty(content) ? textOrTitle : content
-        prettyPrint(title, text, '#F56C6C')
+
+    public error = (textOrTitle: any, content = '') => {
+        const title = this.isEmpty(content) ? 'Error' : textOrTitle
+        const text = this.isEmpty(content) ? textOrTitle : content
+        this.prettyPrint(title, text, '#F56C6C')
     }
-    const warning = (textOrTitle: any, content = '') => {
-        const title = isEmpty(content) ? 'Warning' : textOrTitle
-        const text = isEmpty(content) ? textOrTitle : content
-        prettyPrint(title, text, '#E6A23C')
+
+    public warning = (textOrTitle: any, content = '') => {
+        const title = this.isEmpty(content) ? 'Warning' : textOrTitle
+        const text = this.isEmpty(content) ? textOrTitle : content
+        this.prettyPrint(title, text, '#E6A23C')
     }
-    const success = (textOrTitle: any, content = '') => {
-        const title = isEmpty(content) ? 'Success ' : textOrTitle
-        const text = isEmpty(content) ? textOrTitle : content
-        prettyPrint(title, text, '#67C23A')
+
+    public success = (textOrTitle: any, content = '') => {
+        const title = this.isEmpty(content) ? 'Success ' : textOrTitle
+        const text = this.isEmpty(content) ? textOrTitle : content
+        this.prettyPrint(title, text, '#67C23A')
     }
-    const table = () => {
+
+    public table = () => {
         const data = [
             { id: 1, name: 'Alice', age: 25 },
             { id: 2, name: 'Bob', age: 30 },
@@ -63,8 +78,9 @@ const useColorLogOutPut = () => {
             )
         })
     }
-    const picture = (url: any, scale = 1) => {
-        if (isProduction) return
+
+    public picture = (url: any, scale = 1) => {
+        if (this.isProduction) return
         const img = new Image()
         img.crossOrigin = 'anonymous'
         img.onload = () => {
@@ -92,15 +108,6 @@ const useColorLogOutPut = () => {
         }
         img.src = url
     }
-
-    return {
-        info,
-        error,
-        warning,
-        success,
-        picture,
-        table
-    }
 }
-// 创建打印对象
-export default useColorLogOutPut
+
+export const log = new WebLog(import.meta.env.MODE);

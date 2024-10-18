@@ -1,31 +1,28 @@
 /** 
-  File: log4j.ts
-  Author: Fromsko
-  Created At: 2024-09-14
-  GitHub: https://github.com/fromsko
-  Description: Log4j 封装日志
+  File: file_log.ts
+  Description: 文件日志
 */
-import * as log4js from "log4js";
+import * as log4js from 'log4js'
 
 const levels = {
-    'trace': log4js.levels.TRACE,
-    'debug': log4js.levels.DEBUG,
-    'info': log4js.levels.INFO,
-    'warn': log4js.levels.WARN,
-    'error': log4js.levels.ERROR,
-    'fatal': log4js.levels.FATAL,
+    trace: log4js.levels.TRACE,
+    debug: log4js.levels.DEBUG,
+    info: log4js.levels.INFO,
+    warn: log4js.levels.WARN,
+    error: log4js.levels.ERROR,
+    fatal: log4js.levels.FATAL,
 }
 
 log4js.configure({
     appenders: {
-        console: { type: 'console' }
+        console: { type: 'console' },
     },
     categories: {
         default: {
             appenders: ['out', 'app'],
             level: 'debug',
-        }
-    }
+        },
+    },
 })
 
 /**
@@ -37,7 +34,6 @@ export const debug = (content: string) => {
     logger.level = levels.debug
     logger.debug(content)
 }
-
 
 /**
  * 日志输出, level 为 trace
@@ -88,4 +84,3 @@ export const error = (content: string) => {
     logger.level = levels.error
     logger.error(content)
 }
-

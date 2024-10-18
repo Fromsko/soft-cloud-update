@@ -68,7 +68,7 @@ bun i sass -S
 import { useRouter } from 'vue-router'
 let router = useRouter()
 const goHome = () => {
-  router.push('/welcome')
+  router.push('/dashboard')
 }
 </script>
 ```
@@ -83,10 +83,10 @@ const goHome = () => {
 
 <script>
 export default {
-  name: 'welcome',
+  name: 'dashboard',
   methods: {
     goHome() {
-      this.$router.push('/welcome')
+      this.$router.push('/dashboard')
     },
   },
 }

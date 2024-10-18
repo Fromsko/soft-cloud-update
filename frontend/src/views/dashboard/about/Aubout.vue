@@ -26,7 +26,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
 import { useStorage } from '@/utils/storage'
 
 const storage = useStorage()
@@ -34,26 +34,22 @@ const storage = useStorage()
 const clearToken = () => {
   storage.clearItem('token')
 }
-export default {
-  name: 'about',
-  methods: { clearToken },
-}
 </script>
 
-<style>
-.about-area {
-  margin: 8px;
-}
-
-.about-layout h1 {
+<style lang="scss" scoped>
+.about-layout {
   display: flex;
   justify-content: center;
   align-items: center;
-}
 
-.about-layout .toLogin {
-  border: 10px;
-  color: blue;
-  font-size: large;
+  h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .about-area {
+    margin: 8px;
+  }
 }
 </style>

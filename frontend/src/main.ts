@@ -1,19 +1,22 @@
-import api from "@/api"
-import App from '@/App.vue'
-import router from '@/router'
-import request from '@/utils/request'
-import storage from '@/utils/storage'
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
-import { createPinia } from 'pinia'
-import { createApp } from 'vue'
+import { createPinia } from 'pinia';
+import { createApp } from 'vue';
+
+import * as ElementPlusIconsVue from '@element-plus/icons-vue';
+import ElementPlus from 'element-plus';
+import 'element-plus/dist/index.css';
+
+import api from "@/api";
+import App from '@/App.vue';
+import router from '@/router';
+import request from '@/utils/http/request';
+import { useStorage } from '@/utils/storage/';
 
 const app = createApp(App)
 const pinia = createPinia()
+const storage = useStorage()
 
-app.config.globalProperties.$request = request
 app.config.globalProperties.$api = api
+app.config.globalProperties.$request = request
 app.config.globalProperties.$storage = storage
 
 // 引入图标组件

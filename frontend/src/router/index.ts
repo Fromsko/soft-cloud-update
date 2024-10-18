@@ -1,90 +1,102 @@
-import useColorLogOutPut from "@/utils/color_log"
-import storage from "@/utils/storage"
-import About from "@/views/About.vue"
-import ApiPage from '@/views/ApiPage.vue'
-import Base from "@/views/Base.vue"
-import Home from "@/views/Home.vue"
-import Welcome from "@/views/Welcome.vue"
-import { createRouter, createWebHashHistory } from "vue-router"
+import { log } from "@/utils/log/web_log";
+import { useStorage } from "@/utils/storage/index";
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 
-const log = useColorLogOutPut()
 
 // NOTE: 路由设置
-const routes = [
+const routes: Array<RouteRecordRaw> = [
   {
     name: 'base',
     path: '/',
     meta: {
       title: "首页"
     },
-    component: Base
+    component: () => import("@/views/Base.vue"),
+    children: [
+
+    ]
   },
   {
-    name: 'api',
+    name: 'ApiView',
     path: '/api/docs',
-    component: ApiPage,
-    props: ((route: any) => {
-      console.log(route.state);
-      console.log(route.params);
-
-      return { apiInfo: route.params.apiInfo }
-    }),
+    component: () => import('@/views/ApiPage.vue'),
     meta: {
       title: "内容"
     },
   },
   {
-    name: 'Login',
-    path: '/Login',
-    // component: () => import("@/components/Login/LoginA.vue"),
+    name: 'login',
+    path: '/login',
     component: () => import("@/views/Login.vue"),
     meta: {
       title: "登陆页^_^"
     }
   },
   {
-    name: 'home',
-    path: '/home',
-    meta: {
-      title: "首页"
-    },
-    component: Home,
+    name: 'DashBoardView',
+    path: '/dashboard',
+    redirect: '/dashboard/home',
+    component: () => import("@/views/dashboard/index.vue"),
     children: [
       {
-        name: 'About',
-        path: '/About',
-        component: About,
+        name: 'DashBoardHomeView',
+        path: 'home',
+        component: () => import("@/views/dashboard/home/Home.vue"),
         meta: {
-          title: "关于"
+          title: "控制台"
         },
       },
       {
-        name: 'Welcome',
-        path: '/Welcome',
-        component: Welcome,
+        name: 'UserView',
+        path: 'user',
+        component: () => import("@/views/dashboard/user/User.vue"),
         meta: {
-          title: "欢迎页"
+          title: "用户界面"
+        },
+      },
+      {
+        name: 'FilebrowerView',
+        path: 'filebrower',
+        component: () => import("@/views/dashboard/file/File.vue"),
+        meta: {
+          title: "文件管理"
+        },
+      },
+      {
+        name: 'ConponentsView',
+        path: 'conponents',
+        component: () => import("@/views/Components.vue"),
+        meta: {
+          title: "组件展示"
         },
         children: [
           {
-            name: 'User',
-            path: 'User',
-            component: Welcome,
+            name: 'DemoCardView',
+            path: 'demoCard',
+            component: () => import("@/components/DemoCard.vue"),
             meta: {
-              title: "用户页面"
-            },
-          },
-          {
-            name: 'Info',
-            path: 'Info',
-            component: Welcome,
-            meta: {
-              title: "信息页面"
+              title: "示例卡片"
             },
           },
         ]
       },
-    ],
+      {
+        name: "ApplicationView",
+        path: 'applications',
+        component: () => import("@/views/dashboard/application/Application.vue"),
+        meta: {
+          title: "应用管理"
+        },
+      },
+      {
+        name: 'about',
+        path: 'about',
+        component: () => import("@/views/dashboard/about/Aubout.vue"),
+        meta: {
+          title: "关于"
+        },
+      },
+    ]
   },
   {
     name: '404',
@@ -99,6 +111,7 @@ const router = createRouter({
   routes: routes
 })
 
+const storage = useStorage()
 
 // 导航守卫
 router.beforeEach((to, from, next) => {
@@ -106,7 +119,7 @@ router.beforeEach((to, from, next) => {
   const { meta: { title } } = to;
   document.title = title as string || '自定义名称';
   const urlPath: string = to.path.toLowerCase();
-  const checkUserInfo: boolean = storage.getItem('userInfo');
+  const checkUserInfo = storage.getItem('userInfo');
 
   // 处理不同路由的逻辑
   switch (urlPath) {

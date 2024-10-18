@@ -4,40 +4,23 @@
       <img src="@/assets/images/qq-logo.png" alt="QQ Logo" class="logo" />
       <el-form :model="loginForm" @keydown.enter="handleSubmit">
         <el-form-item>
-          <el-input
-            v-model="loginForm.qqNumber"
-            placeholder="account"
-            :prefix-icon="UserFilled"
-            clearable
-          ></el-input>
+          <el-input v-model="loginForm.qqNumber" placeholder="account" :prefix-icon="UserFilled" clearable></el-input>
         </el-form-item>
         <el-form-item>
-          <el-input
-            v-model="loginForm.password"
-            type="password"
-            placeholder="password"
-            :prefix-icon="Lock"
-            clearable
-          ></el-input>
+          <el-input v-model="loginForm.password" type="password" placeholder="password" :prefix-icon="Lock" clearable></el-input>
         </el-form-item>
         <el-button type="info" @click="$router.push('/')">返回</el-button>
-        <el-button
-          type="success"
-          @click="handleSubmit"
-          :disabled="!loginForm.password"
-          :loading="isSending"
-          >登录</el-button
-        >
+        <el-button type="success" @click="handleSubmit" :disabled="!loginForm.password" :loading="isSending">登录</el-button>
       </el-form>
     </div>
   </div>
 </template>
 
-<script setup>
-import storage from '@/utils/storage'
+<script lang="ts" setup>
+import { useStorage } from '@/utils/storage'
 import { Lock, UserFilled } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
-import { defineComponent, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const isLogin = ref(true)
@@ -46,6 +29,7 @@ const loginForm = reactive({
   qqNumber: '',
   password: '',
 })
+const storage = useStorage()
 const router = useRouter()
 
 const handleSubmit = () => {
@@ -64,10 +48,6 @@ const handleSubmit = () => {
     clearInterval(timer)
   }, 1500)
 }
-
-defineComponent({
-  name: 'Login',
-})
 </script>
 
 <style scoped>

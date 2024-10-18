@@ -1,28 +1,25 @@
 /** 
-  File: storage.ts
-  Author: Fromsko
-  Created At: 2024-09-14
-  GitHub: https://github.com/fromsko
+  File: index.ts
   Description: storage 封装
 */
-import config from "@/config"
+import config from "@/utils/config"
 
-export default {
+export const useStorage = () => ({
     setItem(key: any, val: any) {
         let storage = this.getStorage()
         storage[key] = val
         window.localStorage.setItem(
-            config.namespace,
+            config.NAME_SPACE,
             JSON.stringify(storage)
         )
     },
-    getItem(key: any) {
-        return this.getStorage()[key]
+    getItem(key: any): Object {
+        return this.getStorage()[key] ?? {}
     },
     getStorage() {
         return JSON.parse(
             window.localStorage.getItem(
-                config.namespace
+                config.NAME_SPACE
             ) || "{}"
         )
     },
@@ -30,11 +27,11 @@ export default {
         let storage = this.getStorage()
         delete storage[key]
         window.localStorage.setItem(
-            config.namespace,
+            config.NAME_SPACE,
             JSON.stringify(storage)
         )
     },
     clearAll() {
         window.localStorage.clear()
     }
-}
+})
