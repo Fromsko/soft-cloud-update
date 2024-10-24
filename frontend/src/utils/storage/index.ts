@@ -1,7 +1,3 @@
-/** 
-  File: index.ts
-  Description: storage 封装
-*/
 import config from "@/utils/config"
 
 export const useStorage = () => ({

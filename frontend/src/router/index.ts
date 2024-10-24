@@ -2,8 +2,6 @@ import { log } from "@/utils/log/web_log";
 import { useStorage } from "@/utils/storage/index";
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 
-
-// NOTE: 路由设置
 const routes: Array<RouteRecordRaw> = [
   {
     name: 'base',
@@ -11,23 +9,20 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: "首页"
     },
-    component: () => import("@/views/Base.vue"),
-    children: [
-
-    ]
+    component: () => import("@/views/base/index.vue"),
   },
   {
     name: 'ApiView',
     path: '/api/docs',
-    component: () => import('@/views/ApiPage.vue'),
+    component: () => import('@/views/base/api/ApiDocs.vue'),
     meta: {
-      title: "内容"
+      title: "接口文档"
     },
   },
   {
     name: 'login',
     path: '/login',
-    component: () => import("@/views/Login.vue"),
+    component: () => import("@/views/auth/LoginA.vue"),
     meta: {
       title: "登陆页^_^"
     }
@@ -65,20 +60,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         name: 'ConponentsView',
         path: 'conponents',
-        component: () => import("@/views/Components.vue"),
+        component: () => import("@/views/dashboard/conponents/Components.vue"),
         meta: {
           title: "组件展示"
         },
-        children: [
-          {
-            name: 'DemoCardView',
-            path: 'demoCard',
-            component: () => import("@/components/DemoCard.vue"),
-            meta: {
-              title: "示例卡片"
-            },
-          },
-        ]
       },
       {
         name: "ApplicationView",
@@ -105,7 +90,6 @@ const routes: Array<RouteRecordRaw> = [
   }
 ]
 
-// router 对象
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: routes
@@ -113,15 +97,12 @@ const router = createRouter({
 
 const storage = useStorage()
 
-// 导航守卫
 router.beforeEach((to, from, next) => {
-  // 设置标签信息
   const { meta: { title } } = to;
   document.title = title as string || '自定义名称';
   const urlPath: string = to.path.toLowerCase();
   const checkUserInfo = storage.getItem('userInfo');
 
-  // 处理不同路由的逻辑
   switch (urlPath) {
     case '/login':
     case '/register':
@@ -131,22 +112,17 @@ router.beforeEach((to, from, next) => {
     default:
       if (urlPath !== '/' && !checkUserInfo) {
         log.warning(`用户无权但是访问了:> ${urlPath}`);
-        next('/login'); // 重定向到登录
+        next('/login');
       } else {
         log.success(`正常访问了: ${urlPath}`);
-        next(); // 允许继续访问
+        next();
       }
       break;
   }
 });
 
-// 全局后置守卫
-router.afterEach((to, from, failure) => {
-  // console.log('全局后置守卫', to, from, failure)
-  // next()
-})
+router.afterEach((to, from, failure) => { })
 
-// 全局解析守
 router.beforeResolve((to, from, next) => {
   next()
 })

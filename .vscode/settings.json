@@ -5,10 +5,6 @@
     "javascript": "html",
     "typescript": "html"
   },
-  // "search.exclude": {
-  //     "**/node_modules": true,
-  //     "build/": true,
-  // },
   "files.exclude": {
     "**/node_modules": true,
     "**/*.lock*": true,

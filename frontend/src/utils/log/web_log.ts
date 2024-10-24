@@ -1,8 +1,3 @@
-/** 
-  File: web_log.ts
-  Description: 浏览器日志
-*/
-
 class WebLog {
     private static instance: WebLog
     private isProduction: boolean

@@ -19,7 +19,6 @@ app.config.globalProperties.$api = api
 app.config.globalProperties.$request = request
 app.config.globalProperties.$storage = storage
 
-// 引入图标组件
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
