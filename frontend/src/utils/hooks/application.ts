@@ -35,11 +35,9 @@ export function useApplication() {
   ]);
 
   const addApplication = (app: IApplication) => {
-    // 确保应用名唯一
     if (applications.value.find(a => a.name === app.name)) {
       throw new Error('应用名已存在');
     }
-    // 添加新应用
     app.id = applications.value.length + 1; // 简单的ID生成
     applications.value.push(app);
   };

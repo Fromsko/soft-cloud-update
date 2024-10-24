@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 
 export const useApiStore = defineStore('apiStore', {
     state: () => ({
-        apiInfo: null as any, // 初始状态
+        apiInfo: null as any,
     }),
     actions: {
         setApiInfo(info: any) {

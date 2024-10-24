@@ -11,7 +11,6 @@ import { marked } from 'marked'
 import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-// 类型定义
 interface ApiInfo {
   id: number
   title: string
@@ -19,7 +18,6 @@ interface ApiInfo {
   calls: number
 }
 
-// 获取路由
 const route = useRoute()
 const router = useRouter()
 

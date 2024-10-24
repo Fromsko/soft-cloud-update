@@ -28,7 +28,7 @@ const router = useRouter()
 const { login, userInfo } = useUserStore()
 
 const handleSubmit = async (event: Event) => {
-  event.preventDefault() // 阻止默认提交行为
+  event.preventDefault()
   isSending.value = true
 
   try {

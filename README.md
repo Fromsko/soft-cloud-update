@@ -16,13 +16,26 @@ vercel
 - 登录页面
   ![frist-commited](./docs/login-page.png)
 
+- 应用管理页面
+  ![frist-commited](./docs/应用管理.png)
+
+- 后台管理页面
+  ![frist-commited](./docs/后台管理界面.png)
+
+- 侧边栏
+  ![frist-commited](./docs/侧边栏.png)
+
 - 关于页面
-  ![frist-commited](./docs/about-page.png)
+  ![frist-commited](./docs/关于页面.png)
+
+## 演示
+
+![alt text](./docs/README-recording.gif)
 
 ## 启动
 
 ```shell
-bun run dev
+bun dev
 ```
 
 ---

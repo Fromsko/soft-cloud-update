@@ -1,7 +1,3 @@
-/** 
-  File: file_log.ts
-  Description: 文件日志
-*/
 import * as log4js from 'log4js'
 
 const levels = {
