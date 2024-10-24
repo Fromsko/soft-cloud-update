@@ -1,4 +1,3 @@
-// store/apiStore.ts
 import { defineStore } from 'pinia';
 
 export const useApiStore = defineStore('apiStore', {

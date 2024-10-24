@@ -12,7 +12,7 @@ export default {
             data: params
         })
     },
-    async logout(params: any) {
+    async logout() {
         return await request({
             url: '/user/logout',
             method: 'get',

@@ -1,18 +1,20 @@
-import vue from '@vitejs/plugin-vue'
-import path from 'path'
-import ElementPlus from 'unplugin-element-plus/vite'
-import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue';
+import path from 'path';
+import ElementPlus from 'unplugin-element-plus/vite';
+import { defineConfig } from 'vite';
 
-// https://vitejs.dev/config/
+
+const pathSrc = path.resolve(__dirname, 'src')
+
 export default defineConfig({
+  mode: 'production', // development
   plugins: [
     vue(),
     ElementPlus({})
   ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      '*': ''
+      '@': pathSrc,
     },
   },
   server: {

@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { useApiStore } from '@/utils/store/apiStore' // 引入 store
+import { useApiStore } from '@/utils/stores/api' // 引入 store
 import { marked } from 'marked'
 import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'

@@ -7,8 +7,10 @@ import { EnvConfig, Environment } from '@/models/env';
 const NAME_SPACE = import.meta.env.VITE_NAME_SPACE as string;
 const ENV = import.meta.env.MODE as Environment;
 
+console.log(ENV, EnvConfig[ENV])
+
 export default {
-    ENV,
-    NAME_SPACE,
-    ...EnvConfig[ENV],
+  ENV,
+  NAME_SPACE,
+  ...EnvConfig[ENV],
 };

@@ -3,7 +3,7 @@
     <div class="content">
       <div class="sub-title">欢迎体验</div>
       <div class="title">CSS</div>
-      <div class="desc">这是组件页面</div>
+      <div class="card">这是组件页面</div>
     </div>
     <div class="img"></div>
   </div>
@@ -18,7 +18,22 @@
   align-items: center;
   height: 100%;
   .content {
-    position: relative;
+    height: 200px;
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(18.5px);
+    -webkit-backdrop-filter: blur(18.5px);
+    border: 0px solid rgba(255, 255, 255, 0.18);
+    box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
+    -webkit-box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
+    border-radius: 25px;
+    -webkit-border-radius: 25px;
+    color: rgb(255, 255, 255);
+
     .sub-title {
       font-size: 30px;
       line-height: 42px;
@@ -28,11 +43,6 @@
       font-size: 40px;
       line-height: 62px;
       color: #409eff;
-    }
-    .desc {
-      text-align: right;
-      font-size: 14px;
-      color: #999;
     }
   }
   .img {

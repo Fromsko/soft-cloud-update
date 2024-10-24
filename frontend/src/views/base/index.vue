@@ -78,7 +78,7 @@ const apis = reactive([
   // 添加更多的 API 数据...
 ])
 
-import { useApiStore } from '@/utils/store/apiStore' // 引入 store
+import { useApiStore } from '@/utils/stores/api' // 引入 store
 
 const handleCardClick = (apiInfo: any) => {
   isClicked.value = !isClicked

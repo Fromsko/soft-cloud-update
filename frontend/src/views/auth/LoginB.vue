@@ -4,25 +4,13 @@
       <el-form :model="user" status-icon :rules="rules">
         <div class="title">Login</div>
         <el-form-item prop="userName">
-          <el-input
-            type="text"
-            :prefix-icon="User"
-            placeholder="account"
-            v-model="user.userName"
-          />
+          <el-input type="text" :prefix-icon="User" placeholder="account" v-model="user.userName" />
         </el-form-item>
         <el-form-item prop="userPwd">
-          <el-input
-            type="text"
-            :prefix-icon="Lock"
-            placeholder="password"
-            v-model="user.userPwd"
-          />
+          <el-input type="password" :prefix-icon="Lock" placeholder="password" v-model="user.userPwd" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="btn-login" @click="login"
-            >登录</el-button
-          >
+          <el-button type="primary" class="btn-login" :loading="isLoading" @click="login">登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -31,7 +19,8 @@
 
 <script lang="ts" setup>
 import { Lock, User } from '@element-plus/icons-vue'
-import { defineComponent, getCurrentInstance, reactive } from 'vue'
+import { ElMessage } from 'element-plus'
+import { defineComponent, getCurrentInstance, reactive, ref } from 'vue'
 
 const instance = getCurrentInstance()
 const api = instance?.appContext.config.globalProperties.$api
@@ -58,13 +47,27 @@ const rules = {
   ],
 }
 
-const login = () => {
-  const data = api.login({
-    userName: 'root',
-    userPwd: 'root',
-  })
-  console.log(data)
+const isLoading = ref(false)
+
+const login = async () => {
+  const { userName, userPwd } = user
+  if (!userName || !userPwd) {
+    ElMessage.error('请填写完整的用户名和密码')
+    return
+  }
+
+  isLoading.value = true
+  try {
+    const data = await api.login({ userName, userPwd })
+    console.log(data)
+    ElMessage.success('登录成功')
+  } catch (error: any) {
+    ElMessage.error('登录失败: ' + error.message)
+  } finally {
+    isLoading.value = false
+  }
 }
+
 defineComponent({
   name: 'LoginA',
 })

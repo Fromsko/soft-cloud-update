@@ -2,51 +2,44 @@
   <div class="login-container">
     <div class="login-box">
       <img src="@/assets/images/qq-logo.png" alt="QQ Logo" class="logo" />
-      <el-form :model="loginForm" @keydown.enter="handleSubmit">
+      <el-form :model="userInfo" @keydown.enter="handleSubmit">
         <el-form-item>
-          <el-input v-model="loginForm.qqNumber" placeholder="account" :prefix-icon="UserFilled" clearable></el-input>
+          <el-input v-model="userInfo.username" placeholder="account" :prefix-icon="UserFilled" clearable></el-input>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="loginForm.password" type="password" placeholder="password" :prefix-icon="Lock" clearable></el-input>
+          <el-input v-model="userInfo.password" type="password" placeholder="password" :prefix-icon="Lock" clearable></el-input>
         </el-form-item>
         <el-button type="info" @click="$router.push('/')">返回</el-button>
-        <el-button type="success" @click="handleSubmit" :disabled="!loginForm.password" :loading="isSending">登录</el-button>
+        <el-button type="success" @click="handleSubmit" :disabled="!userInfo.password" :loading="isSending"> 登录 </el-button>
       </el-form>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useStorage } from '@/utils/storage'
+import { useUserStore } from '@/utils/stores/user'
 import { Lock, UserFilled } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-const isLogin = ref(true)
 const isSending = ref(false)
-const loginForm = reactive({
-  qqNumber: '',
-  password: '',
-})
-const storage = useStorage()
 const router = useRouter()
+const { login, userInfo } = useUserStore()
 
-const handleSubmit = () => {
+const handleSubmit = async (event: Event) => {
+  event.preventDefault() // 阻止默认提交行为
   isSending.value = true
 
-  if (loginForm.qqNumber && loginForm.password) {
-    isLogin.value = true
-    storage.setItem('userInfo', 'sk-Passed')
+  try {
+    await login(userInfo)
     ElMessage.success('登录成功')
-  } else {
-    ElMessage.error('请填写完整的登录信息')
-  }
-  isSending.value = false
-  let timer = setInterval(async () => {
     await router.push('/')
-    clearInterval(timer)
-  }, 1500)
+  } catch (error: any) {
+    ElMessage.error('登录失败: ' + error.message)
+  } finally {
+    isSending.value = false
+  }
 }
 </script>
 

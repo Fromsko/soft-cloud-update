@@ -13,8 +13,7 @@
     "experimentalDecorators": true,
     "lib": ["esnext", "dom"],
     "paths": {
-      "~/*": ["src/*"],
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
     "outDir": "build/",
     "skipLibCheck": true

@@ -6,16 +6,14 @@ import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } 
 
 class RequestManager {
     private service;
-    private baseURL: string;
 
     constructor() {
-        this.baseURL = config.baseApi;
-
-        this.service = axios.create({ baseURL: this.baseURL });
+        this.service = axios.create();
 
         this.initializeRequestInterceptor();
         this.initializeResponseInterceptor();
 
+        this.setBaseUrl();
         this.setupRequestMethods();
     }
 
@@ -46,7 +44,6 @@ class RequestManager {
     }
 
     private getToken(): string | undefined {
-        // TODO: 获取 Token 信息
         log.warning("使用的模拟 Token")
         return 'bear fromsko';
     }
@@ -61,17 +58,16 @@ class RequestManager {
         }
     }
 
-    // 通用请求方法
-    async request<T = any>(options: AxiosRequestConfig): Promise<T> {
+    request = async <T = any>(options: AxiosRequestConfig): Promise<T> => {
         if (options.method?.toLowerCase() === 'get') {
             options.params = options.data;
         }
-        this.setBaseURL();
         return this.service(options);
     }
 
-    private setBaseURL() {
-        if (config.useMock) {
+    private setBaseUrl() {
+
+        if (config.useMock === 'true') {
             this.service.defaults.baseURL = config.mockApi;
         } else {
             this.service.defaults.baseURL = config.baseApi;
@@ -93,6 +89,6 @@ class RequestManager {
     }
 }
 
-const manager = new RequestManager()
+const manager = new RequestManager();
 
 export default manager.request;
